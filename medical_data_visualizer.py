@@ -13,7 +13,13 @@ df['gluc'] = gluc_mask.astype(int)
 cholesterol_mask = df['cholesterol'] > 1
 df['cholesterol'] = cholesterol_mask.astype(int)
 
-
+def round_up(x):
+    if x > 0:
+        return np.ceil(x*10)/10
+    elif x < 0:
+        return np.floor(x*10)/10
+    else:
+        return 0.0
 def draw_cat_plot():
     df_cat = pd.melt(
         df,
@@ -42,9 +48,9 @@ def draw_heat_map():
     df_heat = df[
         (df['ap_lo'] <= df['ap_hi']) &
         (df['height'] >= df['height'].quantile(0.025)) &
-        (df['height'] < df['height'].quantile(0.975)) &
+        (df['height'] <= df['height'].quantile(0.975)) &
         (df['weight'] >= df['weight'].quantile(0.025)) &
-        (df['weight'] < df['weight'].quantile(0.975))
+        (df['weight'] <= df['weight'].quantile(0.975))
         ]
 
     corr = df_heat.corr()
@@ -58,7 +64,7 @@ def draw_heat_map():
         # annot=annot,
         annot=True,
         cmap='coolwarm',
-        fmt='',
+        fmt='.1f',
         square=True,
         linewidths=0.5
     )
