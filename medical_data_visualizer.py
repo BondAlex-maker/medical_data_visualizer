@@ -48,17 +48,17 @@ def draw_heat_map():
         ]
 
     corr = df_heat.corr()
-    corr = np.round(corr, 1)
     mask = np.triu(np.ones_like(corr, dtype=bool))
 
     fig, ax = plt.subplots(figsize=(10, 8))
-
+    # annot = np.vectorize(lambda x: f"{x:.1f}")(corr)
     sns.heatmap(
         corr,
         mask=mask,
+        # annot=annot,
         annot=True,
         cmap='coolwarm',
-        fmt = '.1f',
+        fmt='',
         square=True,
         linewidths=0.5
     )
