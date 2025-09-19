@@ -58,6 +58,7 @@ def draw_heat_map():
         mask=mask,
         annot=True,
         cmap='coolwarm',
+        fmt = '.1f',
         square=True,
         linewidths=0.5
     )
